@@ -6,7 +6,7 @@
 set -eu
 
 : ${NODES:="k8s-m1 k8s-m2 k8s-m3"}
-: ${ADVERTISE_VIP:="172.22.132.9"}
+: ${ADVERTISE_VIP:="192.168.48.140"}
 : ${MANIFESTS_TPML_DIR:="master/manifests"}
 : ${ENCRYPT_TPML_DIR:="master/encryption"}
 : ${ADUIT_TPML_DIR:="master/audit"}
@@ -34,7 +34,7 @@ UNICAST_PEERS=$(echo ${UNICAST_PEERS} | sed 's/,$//')
 # generate manifests
 i=0
 for NODE in ${NODES}; do
-  ssh ${NODE} "sudo mkdir -p ${MANIFESTS_PATH} ${ENCRYPT_PATH} ${ADUIT_PATH}"
+  ssh ${NODE} "mkdir -p ${MANIFESTS_PATH} ${ENCRYPT_PATH} ${ADUIT_PATH}"
   for FILE in ${FILES}; do
     scp ${MANIFESTS_TPML_DIR}/${FILE} ${NODE}:${MANIFESTS_PATH}/${FILE} 2>&1 > /dev/null
   done
